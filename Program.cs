@@ -8,7 +8,7 @@ namespace so_console
     {
         static void Main(string[] args)
         {
-            var input = "AAABBCCCCCAADDDBBBEEEEEEETTTQQQQQQQQQQXXXXXXXZZIIIIIIQQQLLLLL";
+            var input = "AAABBCCCCCAADDDBBBEEEEEEETTTQQQQQQQQQQXXXXXXXZZIIIIIIQQQLLLLLPP";
             var output = new List<string>();
             var cnt = 1;
 
