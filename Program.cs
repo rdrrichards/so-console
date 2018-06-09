@@ -9,6 +9,16 @@ namespace so_console
         static void Main(string[] args)
         {
             var input = "AAABBCCCCCAADDDBBBEEEEEEETTTQQQQQQQQQQXXXXXXXZZIIIIIIQQQLLLLLPP";
+            ProcessTry01(input);
+            ProcessTry02(input);
+
+            Console.ReadLine();
+        }
+
+        private static void ProcessTry01(string input)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("Process Try I (for)");
             var output = new List<string>();
             var cnt = 1;
 
@@ -18,15 +28,51 @@ namespace so_console
                 if (input[i - 1].Equals(input[i])) cnt++;
                 else
                 {
-                    output.Add(input[i-1].ToString());
+                    output.Add(input[i - 1].ToString());
                     output.Add(cnt.ToString());
                     cnt = 1;
                 }
             }
 
-            output.Add(input[input.Length-1].ToString());
+            output.Add(input[input.Length - 1].ToString());
             output.Add(cnt.ToString());
 
+            PrintRebuildOutput(input, output);
+        }
+
+        private static void ProcessTry02(string input)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("Process Try II (Linq)");
+            var output = new List<string>();
+            var cnt = -1;
+            var a = new List<char>(input.ToCharArray());
+            var was = a[0];
+            a.ForEach(c =>
+            {
+                if (was.Equals(c)) cnt++;
+                else
+                {
+                    cnt++;
+                    output.Add(was.ToString());
+                    output.Add(cnt.ToString());
+                    cnt = 0;
+                }
+                was = c;
+            });
+
+            cnt++;
+            output.Add(was.ToString());
+            output.Add(cnt.ToString());
+
+            PrintRebuildOutput(input, output);
+        }
+
+
+
+
+        private static void PrintRebuildOutput(string input, List<string> output)
+        {
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine(output.Count);
             // output.ToList().ForEach(s => Console.WriteLine(s));
@@ -40,8 +86,6 @@ namespace so_console
             Console.WriteLine("These should match:");
             Console.WriteLine(input);
             Console.WriteLine(rebuild.ToString());
-
-            Console.ReadLine();
         }
     }
 }
