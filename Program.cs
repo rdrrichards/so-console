@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace so_console
 {
@@ -11,6 +12,7 @@ namespace so_console
             var input = "AAABBCCCCCAADDDBBBEEEEEEETTTQQQQQQQQQQXXXXXXXZZIIIIIIQQQLLLLLPP";
             ProcessTry01(input);
             ProcessTry02(input);
+            ProcessTry03(input);
 
             Console.ReadLine();
         }
@@ -67,9 +69,20 @@ namespace so_console
 
             PrintRebuildOutput(input, output);
         }
+        private static void ProcessTry03(string input)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("Process Try III (Linq GroupAdjacent)");
+            var a = new List<char>(input.ToCharArray());
+            var gb = a.GroupAdjacent(c => c).Select(m => new { Value = m.Key, Count = m.Count() }).ToList();
 
+            var rebuild = new StringBuilder();
+            gb.ForEach(g => { rebuild.Append(new String(g.Value, g.Count)); });
 
-
+            Console.WriteLine("These should match:");
+            Console.WriteLine(input);
+            Console.WriteLine(rebuild.ToString());
+        }
 
         private static void PrintRebuildOutput(string input, List<string> output)
         {
