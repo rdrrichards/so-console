@@ -16,11 +16,10 @@ namespace so_console
 
             Console.ReadLine();
         }
-
         private static void ProcessTry01(string input)
         {
-            Console.WriteLine("");
-            Console.WriteLine("Process Try I (for)");
+            Console.WriteLine(string.Empty);
+            Console.WriteLine("Process Try I (for loop)");
             var output = new List<string>();
             var cnt = 1;
 
@@ -30,21 +29,20 @@ namespace so_console
                 if (input[i - 1].Equals(input[i])) cnt++;
                 else
                 {
-                    output.Add(input[i - 1].ToString());
-                    output.Add(cnt.ToString());
+                    output.Add($"{input[i - 1]}");
+                    output.Add($"{cnt}");
                     cnt = 1;
                 }
             }
 
-            output.Add(input[input.Length - 1].ToString());
-            output.Add(cnt.ToString());
+            output.Add($"{input[input.Length - 1]}");
+            output.Add($"{cnt}");
 
             PrintRebuildOutput(input, output);
         }
-
         private static void ProcessTry02(string input)
         {
-            Console.WriteLine("");
+            Console.WriteLine(string.Empty);
             Console.WriteLine("Process Try II (Linq)");
             var output = new List<string>();
             var cnt = -1;
@@ -55,40 +53,40 @@ namespace so_console
                 if (was.Equals(c)) cnt++;
                 else
                 {
-                    cnt++;
-                    output.Add(was.ToString());
-                    output.Add(cnt.ToString());
+                    output.Add($"{was}");
+                    output.Add($"{(++cnt)}");
                     cnt = 0;
                 }
                 was = c;
             });
 
             cnt++;
-            output.Add(was.ToString());
-            output.Add(cnt.ToString());
+            output.Add($"{was}");
+            output.Add($"{cnt}");
 
             PrintRebuildOutput(input, output);
         }
         private static void ProcessTry03(string input)
         {
-            Console.WriteLine("");
+            Console.WriteLine(string.Empty);
             Console.WriteLine("Process Try III (Linq GroupAdjacent)");
             var a = new List<char>(input.ToCharArray());
-            var gb = a.GroupAdjacent(c => c).Select(m => new { Value = m.Key, Count = m.Count() }).ToList();
+            var output = a.GroupAdjacent(c => c).Select(m => new { Value = m.Key, Count = m.Count() }).ToList();
 
             var rebuild = new StringBuilder();
-            gb.ForEach(g => { rebuild.Append(new String(g.Value, g.Count)); });
+            output.ForEach(g => { rebuild.Append(new String(g.Value, g.Count)); });
 
-            Console.WriteLine("These should match:");
-            Console.WriteLine(input);
-            Console.WriteLine(rebuild.ToString());
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine(output.Count);
+            Console.WriteLine(string.Join(",", output));
+            Console.WriteLine("---------------------------------------------------");
+
+            PrintFinalOutput(input, rebuild);
         }
-
         private static void PrintRebuildOutput(string input, List<string> output)
         {
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine(output.Count);
-            // output.ToList().ForEach(s => Console.WriteLine(s));
             Console.WriteLine(string.Join(",", output.ToArray()));
             Console.WriteLine("---------------------------------------------------");
 
@@ -96,6 +94,10 @@ namespace so_console
             for (int i = 0; i < output.Count; i++)
                 rebuild.Append(new String(char.Parse(output[i]), int.Parse(output[++i])));
 
+            PrintFinalOutput(input, rebuild);
+        }
+        private static void PrintFinalOutput(string input, StringBuilder rebuild)
+        {
             Console.WriteLine("These should match:");
             Console.WriteLine(input);
             Console.WriteLine(rebuild.ToString());
