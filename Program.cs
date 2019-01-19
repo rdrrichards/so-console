@@ -92,7 +92,7 @@ namespace so_console
 
             var rebuild = new StringBuilder();
             for (int i = 0; i < output.Count; i++)
-                rebuild.Append(new String(char.Parse(output[i]), int.Parse(output[++i])));
+                rebuild.Append(new string(char.Parse(output[i]), int.Parse(output[++i])));
 
             PrintFinalOutput(input, rebuild);
         }
