@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace so_console
 {
@@ -10,9 +11,10 @@ namespace so_console
         static void Main(string[] args)
         {
             var input = "AAABBCCCCCAADDDBBBEEEEEEETTTQQQQQQQQQQXXXXXXXZZIIIIIIQQQLLLLLPP";
-            ProcessTry01(input);
-            ProcessTry02(input);
-            ProcessTry03(input);
+            // ProcessTry01(input);
+            // ProcessTry02(input);
+            // ProcessTry03(input);
+            ProcessTry04(input);
 
             Console.ReadLine();
         }
@@ -82,6 +84,24 @@ namespace so_console
             Console.WriteLine("---------------------------------------------------");
 
             PrintFinalOutput(input, rebuild);
+        }
+        private static void ProcessTry04(string input)
+        {
+            Console.WriteLine(string.Empty);
+            Console.WriteLine("Process Try IV (LINQ Aggregate)");
+            var inputArray = input.Select(a => a.ToString()).ToArray();
+            var seed = inputArray[0];
+
+            var output = inputArray.Aggregate(new string[] { seed, "0" }, (acc, next) => {
+                if (next == seed) 
+                    acc[acc.Count() - 1] = (int.Parse(acc[acc.Count() - 1]) + 1).ToString();
+                else
+                    acc = acc.Concat(new string[] {next, "1"}).ToArray();
+                seed = next;
+                return acc;
+            });
+            
+            PrintRebuildOutput(input, output.ToList());
         }
         private static void PrintRebuildOutput(string input, List<string> output)
         {
